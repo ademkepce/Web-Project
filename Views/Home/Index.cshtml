@@ -1,0 +1,284 @@
+﻿@model Proje.Models.ViewModel.HomeViewModel
+
+<section class="offer_section">
+    <div class="offer_container">
+        <div class="container ">
+            <div class="row">
+                @foreach (var item in Model.Discount)
+                {
+                    <div class="col-md-6  ">
+                        <div class="box ">
+                            <div class="img-box">
+                                <img src="@Url.Content(item.Menu.ImageURL)" asp-append-version="true" style="margin:10px 0 0 0;">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    @item.Menu.FoodName
+                                </h5>
+                                <h6>
+                                    <span>@item.DiscountRate%</span> Off
+                                </h6>
+                                <button type="button" class="btn btn-warning"  onclick="order2('@item.Menu.FoodName', '@item.Menu.ImageURL', '@item.Menu.Price')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                    </svg>
+                                    @lang["Order"]
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- food section -->
+<section class="food_section layout_padding">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                @lang["Our Menu"]
+            </h2>
+        </div>
+
+        <ul class="filters_menu">
+            <li class="nav-link active" onclick="openMenu(event, 'All')">All</li>
+            <li class="nav-link" onclick="openMenu(event, 'Burger')">Burger</li>
+            <li class="nav-link" onclick="openMenu(event, 'Pizza')">Pizza</li>
+            <li class="nav-link" onclick="openMenu(event, 'Pasta')">Pasta</li>
+            <li class="nav-link" onclick="openMenu(event, 'Fries')">Fries</li>
+        </ul>
+        <div id="All" class="row grid">
+            @foreach (var item in Model.Menu)
+            {
+                <div class="col-sm-6 col-lg-4 all">
+                    <div class="box">
+                        <div id="foodMenu">
+                            <div class="img-box">
+                                <img src="@Url.Content(item.ImageURL)" asp-append-version="true">
+                            </div>
+                            <div class="detail-box">
+                                <h5 id="deneme">@item.FoodName</h5>
+                                <p>@item.Description</p>
+                                <div class="options">
+                                    <h6>$@item.Price</h6>
+                                    <button type="button" class="btn btn-warning" id="order" onclick="order1('@item.FoodName', '@item.ImageURL', '@item.Price')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                        </svg>
+                                        Order
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="Burger" class="row grid">
+            @foreach (var item in Model.Menu)
+            {
+                if (@item.CategoryId == 1)
+                {
+                    <div class="col-sm-6 col-lg-4 all">
+                        <div class="box">
+                            <div id="foodMenu">
+                                <div class="img-box">
+                                    <img src="@Url.Content(item.ImageURL)" asp-append-version="true">
+                                </div>
+                                <div class="detail-box">
+                                    <h5 id="deneme">@item.FoodName</h5>
+                                    <p>@item.Description</p>
+                                    <div class="options">
+                                        <h6>$@item.Price</h6>
+                                        <button type="button" class="btn btn-warning" id="order1" onclick="order1('@item.FoodName', '@item.ImageURL', '@item.Price')" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                            </svg>
+                                            Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div id="Pizza" class="row grid">
+            @foreach (var item in Model.Menu)
+            {
+                if (@item.CategoryId == 2)
+                {
+                    <div class="col-sm-6 col-lg-4 all">
+                        <div class="box">
+                            <div id="foodMenu">
+                                <div class="img-box">
+                                    <img src="@Url.Content(item.ImageURL)" asp-append-version="true">
+                                </div>
+                                <div class="detail-box">
+                                    <h5 id="deneme1">@item.FoodName</h5>
+                                    <p>@item.Description</p>
+                                    <div class="options">
+                                        <h6>$@item.Price</h6>
+                                        <button type="button" class="btn btn-warning" id="order" onclick="order1('@item.FoodName', '@item.ImageURL', '@item.Price')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                            </svg>
+                                            Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div id="Pasta" class="row grid">
+            @foreach (var item in Model.Menu)
+            {
+                if (@item.CategoryId == 3)
+                {
+                    <div class="col-sm-6 col-lg-4 all">
+                        <div class="box">
+                            <div id="foodMenu">
+                                <div class="img-box">
+                                    <img src="@Url.Content(item.ImageURL)" asp-append-version="true">
+                                </div>
+                                <div class="detail-box">
+                                    <h5 id="deneme">@item.FoodName</h5>
+                                    <p>@item.Description</p>
+                                    <div class="options">
+                                        <h6>$@item.Price</h6>
+                                        <button type="button" class="btn btn-warning" id="order" onclick="order1('@item.FoodName', '@item.ImageURL', '@item.Price')" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                            </svg>
+                                            Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div id="Fries" class="row grid">
+            @foreach (var item in Model.Menu)
+            {
+                if (@item.CategoryId == 4)
+                {
+                    <div class="col-sm-6 col-lg-4 all">
+                        <div class="box">
+                            <div id="foodMenu">
+                                <div class="img-box">
+                                    <img src="@Url.Content(item.ImageURL)" asp-append-version="true">
+                                </div>
+                                <div class="detail-box">
+                                    <h5 id="deneme">@item.FoodName</h5>
+                                    <p>@item.Description</p>
+                                    <div class="options">
+                                        <h6>$@item.Price</h6>
+                                        <button type="button" class="btn btn-warning" id="order" onclick="order1('@item.FoodName', '@item.ImageURL', '@item.Price')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                            </svg>
+                                            Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</section>
+
+<section class="client_section">
+    <div class="container pb-3">
+        <div class="heading_container heading_center psudo_white_primary mb_45">
+            <h2>
+                What Says Our Customers
+            </h2>
+        </div>
+        <div class="carousel-wrap row ">
+            <div class="owl-carousel client_owl-carousel">
+                @foreach (var item in Model.Comments)
+                {
+                    <div class="item">
+                        <div class="box">
+                            <div class="detail-box">
+                                <p>
+                                    @item.CommentDescription
+                                </p>
+                                <h6>
+                                    @item.ApplicationUser.UserName
+                                </h6>
+                            </div>
+                            <div class="img-box">
+                                <img src="/lib/bootstrap/dist/images/o2.jpg" alt="" class="box-img">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    function openMenu(evt, foodCategory) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("row grid");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("nav-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(foodCategory).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+     function order1 (foodName,foodImage,foodPrice) {
+
+         var yemekismi =  foodName;
+         var yemekfotografi = foodImage;
+         var yemekFiyatı = parseInt(foodPrice);
+         console.log(foodName, foodImage, foodPrice);
+        $.ajax({
+            url: "@Url.Action("Order","Order")",
+            type: "POST",
+            dataType: "json",
+            data: { "FoodName": yemekismi, "ImageUrl": yemekfotografi, "Price": yemekFiyatı },
+            success: function (data) {
+                alert(data);
+            }
+        });
+    }
+
+    function order2 (foodName,foodImage,foodPrice) {
+
+         var yemekismi =  foodName;
+         var yemekfotografi = foodImage;
+         var yemekFiyatı = parseInt(foodPrice);
+         console.log(foodName, foodImage, foodPrice);
+        $.ajax({
+            url: "@Url.Action("Order2", "Order")",
+            type: "POST",
+            dataType: "json",
+            data: { "FoodName": yemekismi, "ImageUrl": yemekfotografi, "Price": yemekFiyatı },
+            success: function (data) {
+                alert(data);
+            }
+        });
+    }
+
+</script>
+
